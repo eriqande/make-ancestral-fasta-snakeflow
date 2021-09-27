@@ -1,0 +1,34 @@
+
+
+include: "rules/common.smk"
+
+
+rule split_target_fasta_by_chrom:
+	input: 
+		tfasta = config["target_fasta"]
+	params:
+		tc = "{tchrom}"
+	output:
+		"results/target_chroms/{tchrom}.fna"
+	log:
+		"results/logs/split_target_fasta_by_chrom/{tchrom}.log"
+	shell:
+		"samtools faidx {input.tfasta} {params.tc} > {output} 2> {log}"
+
+
+
+
+rule extract_query_sequences:
+	input:
+		qfasta = config["query_fasta"]
+	params:
+		qc = query_chrom_string
+	output:
+		"results/query/query.fna"
+	log:
+		"results/log/extract_query_sequences/log.log"
+	shell:
+		"samtools faidx {input.qfasta} {params.qc} > {output} 2> {log}"
+
+
+

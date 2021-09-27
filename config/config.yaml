@@ -1,0 +1,24 @@
+
+
+# location of the genome (fasta) of the species you want
+# to have the ancestral genome for
+target_fasta: /Users/eriq/Documents/UnsyncedData/omyV6-genome/omyV6Chr.fasta
+
+# location of the genome (fasta) of the closely related species
+# that you want to use as the ancestral states
+query_fasta: /Users/eriq/Documents/UnsyncedData/Otsh_v1.0/Otsh_v1.0_genomic.fna
+
+
+
+
+
+# path (relative to the top level of the workflow repo) to a file that
+# has the names of the chromosomes from the target fasta that you want
+# to use.  One name on each line.
+target_chroms: config/target_chroms.txt
+
+
+# path to a file holding the names of the sequences in the query fasta that
+# we want to map against the target
+query_chroms: config/query_chroms.txt
+
