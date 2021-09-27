@@ -7,6 +7,7 @@ include: "rules/download_and_index_genomes.smk"
 rule split_target_fasta_by_chrom:
 	input: 
 		tfasta = config["target_fasta"]
+		fai = config["target_fasta"] + ".fai"
 	params:
 		tc = "{tchrom}"
 	output:
@@ -22,6 +23,7 @@ rule split_target_fasta_by_chrom:
 rule extract_query_sequences:
 	input:
 		qfasta = config["query_fasta"]
+		fai = config["query_fasta"] + ".fai"
 	params:
 		qc = query_chrom_string
 	output:
