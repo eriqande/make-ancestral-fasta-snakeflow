@@ -12,7 +12,7 @@ rule split_target_fasta_by_chrom:
 	log:
 		"results/logs/split_target_fasta_by_chrom/{tchrom}.log"
 	conda:
-		"../envs/samtools.yaml"
+		"envs/samtools.yaml"
 	shell:
 		"samtools faidx {input.tfasta} {params.tc} > {output} 2> {log}"
 
@@ -30,7 +30,7 @@ rule extract_query_sequences:
 	log:
 		"results/log/extract_query_sequences/log.log"
 	conda:
-		"../envs/samtools.yaml"
+		"envs/samtools.yaml"
 	shell:
 		"samtools faidx {input.qfasta} {params.qc} > {output} 2> {log}"
 
@@ -55,7 +55,7 @@ rule run_lastz:
 	log:
 		"results/log/run_lastz/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}_lastz.log"
 	conda:
-		"../envs/lastz.yaml"
+		"envs/lastz.yaml"
 	shell:
 		"lastz {input} {params} > {output} 2> {log}"
 
@@ -71,7 +71,7 @@ rule run_single_cov2:
 	log:
 		"results/log/run_single_cov2/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}_single_cov2.log"
 	conda:
-		"../envs/multiz.yaml"
+		"envs/multiz.yaml"
 	shell:
 		"single_cov2 {input} > {output} 2> {log}"
 

@@ -8,7 +8,7 @@ rule download_genome:
     wget="resources/logs/download_genome/{torq}/wget.log",
     gunzip="resources/logs/download_genome/{torq}/gunzip.log"
   conda:
-    "../envs/wget.yaml"
+    "envs/wget.yaml"
   output:
     fna="resources/genomes/{torq}/{torq}.fna"
   shell:
@@ -22,7 +22,7 @@ rule faidx_genome:
   log:
     "resources/logs/faidx_genome/{torq}/faidx.log"
   conda:
-    "../envs/samtools.yaml"
+    "envs/samtools.yaml"
   output:
     "resources/genomes/{torq}/{torq}.fna.fai"
   shell:
