@@ -33,3 +33,16 @@ def agg_func1(wildcards, trunk, tc, ext):
 		tc=target_chroms,
 		ext=ext
 	)
+
+
+# a function to get the genome URL according to whether we
+# are requesting the target or the query
+def genome_url_from_torq(wildcards):
+	if wildcards.torq == "target":
+		return config["target_url"]
+	elif wildcards.torq == "query":
+		return config["query_url"]
+	else:
+		return "UNEXPECTED TORQ VALUE"
+
+

@@ -1,6 +1,7 @@
 
 
 include: "rules/common.smk"
+include: "rules/download_and_index_genomes.smk"
 
 
 rule split_target_fasta_by_chrom:
