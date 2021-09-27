@@ -75,7 +75,10 @@ that we probably should try to call ancestral states.  (The output fasta will ul
 have an N there so that site should not be considered by, for example, RELATE).
 
 At any rate, once that fraction is determined, it can be applied in completing the
-following steps.
+following steps.  I chose 0.03 as a good cutoff.  I did that by eyeball. I can
+imagine other ways of going about it, too.
+
+
 
 6. Run maf2fasta (from the multiz package) on each the resulting single_cov outputs.
 7. Use an R-script to condense the resulting fastas into things that are congruent with
