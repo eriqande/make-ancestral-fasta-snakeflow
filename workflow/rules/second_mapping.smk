@@ -16,7 +16,7 @@ rule extract_homologous_query_sequences:
 	output:
 		"results/second_mapping/queries-for-each-target/{tchrom}.fna"
 	log:
-		"results/log/extract_homologous_query_sequences/log.log"
+		"results/log/extract_homologous_query_sequences/{tchrom}.log"
 	conda:
 		"../envs/samtools.yaml"
 	shell:
