@@ -78,6 +78,13 @@ At any rate, once that fraction is determined, it can be applied in completing t
 following steps.  I chose 0.03 as a good cutoff.  I did that by eyeball. I can
 imagine other ways of going about it, too.
 
+So, actually, I ultimately made a variety of plots, as coded up in
+`misc/homology-grid.R` and then found the likely homologs in Chinook of
+each chromosome in mykiss.  Doing this should have avoided the paralogs.
+
+For the second half of all this I used the results from the above by
+putting them in the file `config/homolog_sets.csv`.
+
 
 
 6. Run maf2fasta (from the multiz package) on each the resulting single_cov outputs.

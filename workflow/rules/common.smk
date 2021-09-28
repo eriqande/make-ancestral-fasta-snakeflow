@@ -1,3 +1,4 @@
+import pandas as pd
 
 # these two lines are for testing.  Comment out before distribution
 from snakemake.io import load_configfile
@@ -46,3 +47,14 @@ def genome_url_from_torq(wildcards):
 		return "UNEXPECTED TORQ VALUE"
 
 
+
+
+# For the second mapping
+if config["homolog_sets_csv"] != "NULL":
+	homologs = pd.read_csv(config["homolog_sets_csv"]).set_index("target", drop=False)
+
+
+# and here is a function to return the space separated
+# string of homologs given a target
+def homologs_from_tchrom(wildcards):
+	return  homologs.loc[wildcards.tchrom, "homologs"]
