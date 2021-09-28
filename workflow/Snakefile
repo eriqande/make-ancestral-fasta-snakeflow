@@ -4,5 +4,5 @@ include: "rules/common.smk"
 include: "rules/download_and_index_genomes.smk"
 include: "rules/first_mapping.smk"
 include: "rules/summarise_first_mapping.smk"
-include: "rules/second_mapping"
+include: "rules/second_mapping.smk"
 
