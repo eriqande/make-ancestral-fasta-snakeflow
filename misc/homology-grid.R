@@ -68,7 +68,7 @@ g_filt <- ggplot(segs_filt) +
   theme_bw()
 
 ggsave(g_filt, filename = "misc/example_outputs/homology-grid-filt.pdf", width = 40, height = 40)
-
+ggsave(g_filt, filename = "figs/homology-grid-filt.png", width = 20, height = 20)
 
 
 ## So, I made that plot and from it realized that I need to toss out just a few rows from

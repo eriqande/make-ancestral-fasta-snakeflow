@@ -4,10 +4,13 @@ library(tidyverse)
 
 al <- read_tsv("misc/example_outputs/aligned_lengths.tsv")
 
-ggplot(al, aes(x = query, y = fraction)) +
+g <- ggplot(al, aes(x = query, y = fraction)) +
   geom_col() +
   facet_wrap(~target)
 
+dir.create("figs", showWarnings = FALSE)
+
+ggsave(g, file = "figs/aligned-fraction.png", width = 10, height = 10)
 
 # try dropping every query chromosome with  <3% of the total mapped
 # to the target

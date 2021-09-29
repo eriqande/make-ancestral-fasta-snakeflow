@@ -111,4 +111,16 @@ rule catenate_anc_fastas:
 		"cat {input} > {output} 2> {log}"
 
 
+
+rule catenate_pairwise_aligned_base_summaries:
+	input:
+		lambda wc: agg_func1(wildcards=wc, trunk="pairwise_base_counts", tc=target_chroms, ext="csv")
+	output:
+		"results/report/step{step}_{trans}_inner{inner}_ident{ident}/pairwise_aligned_base_summary.csv"
+	log:
+		"results/log/catenate_pairwise_aligned_base_summaries/step{step}_{trans}_inner{inner}_ident{ident}/stderr.log"
+	shell:
+		"awk 'NR==1 {{header=$0; print; next}} $0==header {{next}} {{print}}' {input} > {output} 2> {log} "
+
+
 		
