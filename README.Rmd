@@ -51,7 +51,7 @@ From these results, create a CSV file like that found in `config/homolog_sets.cs
 which tells us which query-species chromosomes appear to be homologous to
 each target-species chromosome. The first 10 lines of that file appear here.
 ```csv
-`r paste(readLines("config/homolog_sets.csv"), collapse = "\n")[1:10]`
+`r paste(readLines("config/homolog_sets.csv")[1:10], collapse = "\n")`
 ```
 Note that if multiple query chromosomes align to a target chromsome, they are separated
 by spaces.
@@ -167,12 +167,32 @@ and catenate all the summaries into a file with a path like this:
 results/report/step20_notransition_inner1000_ident95/pairwise_aligned_base_summary.csv
 ```
 
+This is achieved by, for example, doing:
+```sh
+snakemake --cores 20 --use-conda --use-envmodules \ 
+    results/catenated_anc_fasta/step20_notransition_inner1000_ident95/ancestral.fna \     
+    results/report/step20_notransition_inner1000_ident95/pairwise_aligned_base_summary.csv
+```
+
+The rulegraph for this second section of the workflow can be obtained with this:
+```sh
+snakemake --rulegraph results/catenated_anc_fasta/step20_notransition_inner1000_ident95/ancestral.fna results/report/step20_notransition_inner1000_ident95/pairwise_aligned_base_summary.csv | dot -Tsvg > figs/rulegraph2.svg
+```
+And it looks like this:
+```{r, echo=FALSE, out.width='42%', fig.align='center'}
+knitr::include_graphics("figs/rulegraph2.svg")
+```
 
 
 ## Configuration
 
 All the configuration can be done by modifying the contents of the `config` directory. 
 
-This workflow is set up showing the default values used for mapping the Chinook genome (the
+This workflow is set up showing the values used for mapping the Chinook genome (the
 query) to the _O. mykiss_ genome (our target).  You can change values in the
 `config/config.yaml` file to work for your own pair of closely related species.  
+
+More on this later, but it should be pretty self-explanatory for anyone familiar
+with snakemake.
+
+

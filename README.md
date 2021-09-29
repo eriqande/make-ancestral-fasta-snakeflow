@@ -72,26 +72,6 @@ CM007940.1,CM009205.1
 CM007941.1,CM009208.1
 CM007942.1,CM009206.1 CM009211.1
 CM007943.1,CM009211.1 CM009217.1
-CM007944.1,CM009231.1
-CM007945.1,CM009213.1 CM009217.1
-CM007946.1,CM009210.1
-CM007947.1,CM009228.1 CM009233.1
-CM007948.1,CM009222.1 CM009232.1
-CM007949.1,CM009218.1 CM009230.1
-CM007950.1,CM009223.1 CM009225.1
-CM007951.1,CM009203.1
-CM007952.1,CM009214.1 CM009215.1
-CM007953.1,CM009212.1
-CM007954.1,CM009226.1
-CM007955.1,CM009216.1
-CM007956.1,CM009227.1
-CM007957.1,CM009202.1
-CM007958.1,CM009215.1
-CM007959.1,CM009209.1
-CM007960.1,CM009213.1
-CM007961.1,CM009214.1
-CM007962.1,CM009229.1
-CM007963.1,CM009234.1, NA, NA, NA, NA, NA, NA, NA, NA, NA
 ```
 
 Note that if multiple query chromosomes align to a target chromsome,
@@ -129,8 +109,10 @@ In brief, this part of the snakemake workflow does this:
 6.  Summarize how many base pairs are aligned onto each
     single-chromosome fasta from each of the different target query
     sequences (i.e. chromosomes). And also prepare a file of alignments
-    that is suitable for plotting with ggplot. This is accomplished by
-    running the workflow to this point with a command like:
+    that is suitable for plotting with ggplot.
+
+These steps are all accomplished by running the workflow to this point
+with a command like:
 
 ``` bash
 snakemake --cores 20   --use-conda  \
@@ -218,12 +200,33 @@ and catenate all the summaries into a file with a path like this:
 
     results/report/step20_notransition_inner1000_ident95/pairwise_aligned_base_summary.csv
 
+This is achieved by, for example, doing:
+
+``` sh
+snakemake --cores 20 --use-conda --use-envmodules \ 
+    results/catenated_anc_fasta/step20_notransition_inner1000_ident95/ancestral.fna \     
+    results/report/step20_notransition_inner1000_ident95/pairwise_aligned_base_summary.csv
+```
+
+The rulegraph for this second section of the workflow can be obtained
+with this:
+
+``` sh
+snakemake --rulegraph results/catenated_anc_fasta/step20_notransition_inner1000_ident95/ancestral.fna results/report/step20_notransition_inner1000_ident95/pairwise_aligned_base_summary.csv | dot -Tsvg > figs/rulegraph2.svg
+```
+
+And it looks like this:
+<img src="figs/rulegraph2.svg" width="42%" style="display: block; margin: auto;" />
+
 ## Configuration
 
 All the configuration can be done by modifying the contents of the
 `config` directory.
 
-This workflow is set up showing the default values used for mapping the
-Chinook genome (the query) to the *O. mykiss* genome (our target). You
-can change values in the `config/config.yaml` file to work for your own
-pair of closely related species.
+This workflow is set up showing the values used for mapping the Chinook
+genome (the query) to the *O. mykiss* genome (our target). You can
+change values in the `config/config.yaml` file to work for your own pair
+of closely related species.
+
+More on this later, but it should be pretty self-explanatory for anyone
+familiar with snakemake.
