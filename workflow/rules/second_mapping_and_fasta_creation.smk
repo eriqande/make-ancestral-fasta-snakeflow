@@ -100,4 +100,15 @@ rule condense_anc_fastas:
 		"../scripts/condense-and-summarise-fastas.R"
 
 
+rule catenate_anc_fastas:
+	input:
+		lambda wc: agg_func1(wildcards=wc, trunk="ancestral_fastas", tc=target_chroms, ext="fna")
+	output:
+		"results/catenated_anc_fasta/step{step}_{trans}_inner{inner}_ident{ident}/ancestral.fna"
+	log:
+		"results/log/catenate_anc_fastas/step{step}_{trans}_inner{inner}_ident{ident}/stderr.log"
+	shell:
+		"cat {input} > {output} 2> {log}"
+
+
 		
