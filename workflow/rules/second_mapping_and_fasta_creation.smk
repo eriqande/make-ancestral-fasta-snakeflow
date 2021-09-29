@@ -78,7 +78,7 @@ rule run_maf2fasta:
 	conda:
 		"../envs/multiz.yaml"
 	shell:
-		"maf2fasta {input.target_fna} {input.fna} fasta  > {output} 2> {log}"
+		"maf2fasta {input.target_fna} {input.maf} fasta  > {output} 2> {log}"
 
 
 
@@ -90,7 +90,7 @@ rule condense_anc_fastas:
 	input:
 		maf2fasta = "results/maf2fasta/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.fna"
 	output:
-		anc_fasta = "results/ancestral_fastas/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.fna"
+		anc_fasta = "results/ancestral_fastas/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.fna",
 		bp_pairs = "results/pairwise_base_counts/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.csv"
 	log:
 		"results/log/condense_anc_fastas/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}_condense_anc_fasta.log"
@@ -98,5 +98,6 @@ rule condense_anc_fastas:
 		"R/4.0.3" # this is for SEDNA
 	script:
 		"../scripts/condense-and-summarise-fastas.R"
+
 
 		
