@@ -65,4 +65,38 @@ rule run_single_cov2_dos:
 		"single_cov2 {input} > {output} 2> {log}"
 
 
+
+# convert the alignments into long sequences using multiz's maf2fasta
+rule run_maf2fasta:
+	input:
+		target_fna = "results/target_chroms/{tchrom}.fna",
+		maf = "results/second_mapping/SCOV/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.maf"
+	output:
+		"results/maf2fasta/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.fna"
+	log:
+		"results/log/run_maf2fasta/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}_maf2fasta.log"
+	conda:
+		"../envs/multiz.yaml"
+	shell:
+		"maf2fasta {input.target_fna} {input.fna} fasta  > {output} 2> {log}"
+
+
+
+
+# massage the long sequences from run_maf2fasta into a single fasta file that
+# is congruent with the original target chrom fasta.  Also print out a summary
+# of the number of different aligned base pairs.
+rule condense_anc_fastas:
+	input:
+		maf2fasta = "results/maf2fasta/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.fna"
+	output:
+		anc_fasta = "results/ancestral_fastas/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.fna"
+		bp_pairs = "results/pairwise_base_counts/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.csv"
+	log:
+		"results/log/condense_anc_fastas/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}_condense_anc_fasta.log"
+	envmodules:
+		"R/4.0.3" # this is for SEDNA
+	script:
+		"../scripts/condense-and-summarise-fastas.R"
+
 		
