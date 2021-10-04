@@ -48,13 +48,15 @@ if(length(seq_vec_list) > 2) {
 pair_counts <- table(paste(seq_vec_list[[1]], anc))
 
 # and make a tibble of those numbers
-count_summary <- enframe(pair_counts) %>%
+count_summary <- tibble(
+  name = names(pair_counts),
+  n = as.integer(pair_counts)
+) %>%
   separate(name, into = c("target", "ancestral"), sep = " ") %>%
-  rename(n = value) %>%
   mutate(chrom = tchrom, .before = target)
 
 # and write that file out
-write_csv(count_summary, pair_summary_file)
+write_csv(count_summary, file = pair_summary_file)
 
 
 # and now, from anc, we subset out the sites that are "-"s in the target.
@@ -77,7 +79,7 @@ targ_seq <- seq_vec_list[[1]]
 targ_seq <- targ_seq[targ_seq != "-"]
 
 mask_seq = ifelse(
-  targ_seq %in% c("A", "C", "G", "T") & anc_fasta_seq %in% c("A", "C", "G", "T"),
+  (targ_seq %in% c("A", "C", "G", "T")) & (anc_fasta_seq %in% c("A", "C", "G", "T")),
   "P",
   "N"
   )
