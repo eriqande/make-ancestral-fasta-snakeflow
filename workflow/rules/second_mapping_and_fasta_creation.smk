@@ -91,7 +91,8 @@ rule condense_anc_fastas:
 		maf2fasta = "results/maf2fasta/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.fna"
 	output:
 		anc_fasta = "results/ancestral_fastas/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.fna",
-		bp_pairs = "results/pairwise_base_counts/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.csv"
+		bp_pairs = "results/pairwise_base_counts/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.csv",
+		mask_fasta = "results/mask_fastas/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}.fna"
 	log:
 		"results/log/condense_anc_fastas/step{step}_{trans}_inner{inner}_ident{ident}/{tchrom}_condense_anc_fasta.log"
 	envmodules:
@@ -107,6 +108,17 @@ rule catenate_anc_fastas:
 		"results/catenated_anc_fasta/step{step}_{trans}_inner{inner}_ident{ident}/ancestral.fna"
 	log:
 		"results/log/catenate_anc_fastas/step{step}_{trans}_inner{inner}_ident{ident}/stderr.log"
+	shell:
+		"cat {input} > {output} 2> {log}"
+
+
+rule catenate_mask_fastas:
+	input:
+		lambda wc: agg_func1(wildcards=wc, trunk="mask_fastas", tc=target_chroms, ext="fna")
+	output:
+		"results/catenated_anc_fasta/step{step}_{trans}_inner{inner}_ident{ident}/mask.fna"
+	log:
+		"results/log/catenate_mask_fastas/step{step}_{trans}_inner{inner}_ident{ident}/stderr.log"
 	shell:
 		"cat {input} > {output} 2> {log}"
 
